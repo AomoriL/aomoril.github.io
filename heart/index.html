@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>❤</title>
+    <base target="_blank" href="html5.html" />
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./css/default.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.2/jquery.js"></script>
+    <script type="text/javascript" src="./js/jscex.min.js"></script>
+    <script type="text/javascript" src="./js/jscex-parser.js"></script>
+    <script type="text/javascript" src="./js/jscex-jit.js"></script>
+    <script type="text/javascript" src="./js/jscex-builderbase.min.js"></script>
+    <script type="text/javascript" src="./js/jscex-async.min.js"></script>
+    <script type="text/javascript" src="./js/jscex-async-powerpack.min.js"></script>
+    <script type="text/javascript" src="./js/functions.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/love.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+    <div id="main">
+        <div id="error">本页面采用HTML5技术，目前您的浏览器无法显示，请使用支持HTML5的浏览器查看本页。</div>
+        <div id="wrap">
+            <div id="text">
+                <div id="code">
+                    <p>
+                        <font color="#FF0000">
+                            <span class="say">亲爱的敏敏：</span>
+                            <br>
+                            <span class="say"></span>
+                            <br />
+                            <br />
+                            <span class="say">今天</span>
+                            <br>
+                            <br />
+                            <span class="say">是一个特殊的日子：520</span>
+                            <br />
+                            <br />
+                            <span class="say">在这个日子里，我想说些什么⬇⬇⬇</span>
+                            <br />
+                            <br />
+                            <span class="say">好像新鲜果汁纯粹的透明,你在我马克杯上画上了一颗心</span>
+                            <br>
+                            <br />
+                            <span class="say">你是我今天醒来第一个原因，这一次先听我说我爱你</span>
+                            <br>
+                            <br />
+                            <span class="say">喜欢的感觉就是那么的单纯、简单</span>
+                            <br>
+                            <br />
+                            <span class="say">这一次，我想先对你说我爱你</span>
+                            <br>
+                            <br />
+                            <span class="say">如果非要在这份爱上加一个期限</span>
+                            <br>
+                            <br />
+                            <span class="say">我希望是...... </span>
+                            <br>
+                            <br />
+                            <span class="say">一万年！</span>
+                            <br />
+                            <br />
+                            <span class="say">
+                                <span class="space"></span> -- 爱你的小徒弟❤️ --</span>
+                        </font>
+                    </p>
+                </div>
+            </div>
+            <canvas id="baibaox" width="1100" height="680"></canvas>
+        </div>
+        <embed id="voice" src="./music/2638588016.mp3" hidden="true" autostart="true" loop="true">
+
+    </div>
+
+    <script>
+        (function () {
+            var canvas = $('#baibaox');
+
+            if (!canvas[0].getContext) {
+                $("#error").show();
+                return false;
+            }
+
+            var width = canvas.width();
+            var height = canvas.height();
+            canvas.attr("width", width);
+            canvas.attr("height", height);
+            var opts = {
+                seed: {
+                    x: width / 2 - 20,
+                    color: "rgb(190, 26, 37)",
+                    scale: 2
+                },
+                branch: [
+                    [535, 680, 570, 250, 500, 200, 30, 100, [
+                        [540, 500, 455, 417, 340, 400, 13, 100, [
+                            [450, 435, 434, 430, 394, 395, 2, 40]
+                        ]],
+                        [550, 445, 600, 356, 680, 345, 12, 100, [
+                            [578, 400, 648, 409, 661, 426, 3, 80]
+                        ]],
+                        [539, 281, 537, 248, 534, 217, 3, 40],
+                        [546, 397, 413, 247, 328, 244, 9, 80, [
+                            [427, 286, 383, 253, 371, 205, 2, 40],
+                            [498, 345, 435, 315, 395, 330, 4, 60]
+                        ]],
+                        [546, 357, 608, 252, 678, 221, 6, 100, [
+                            [590, 293, 646, 277, 648, 271, 2, 80]
+                        ]]
+                    ]]
+                ],
+                bloom: {
+                    num: 700,
+                    width: 1080,
+                    height: 650,
+                },
+                footer: {
+                    width: 1200,
+                    height: 5,
+                    speed: 10,
+                }
+            }
+
+            var tree = new Tree(canvas[0], width, height, opts);
+            var seed = tree.seed;
+            var foot = tree.footer;
+            var hold = 1;
+
+            canvas.click(function (e) {
+                var offset = canvas.offset(), x, y;
+                x = e.pageX - offset.left;
+                y = e.pageY - offset.top;
+                if (seed.hover(x, y)) {
+                    hold = 0;
+                    canvas.unbind("click");
+                    canvas.unbind("mousemove");
+                    canvas.removeClass('hand');
+                }
+            }).mousemove(function (e) {
+                var offset = canvas.offset(), x, y;
+                x = e.pageX - offset.left;
+                y = e.pageY - offset.top;
+                canvas.toggleClass('hand', seed.hover(x, y));
+            });
+
+            var seedAnimate = eval(Jscex.compile("async", function () {
+                seed.draw();
+                while (hold) {
+                    $await(Jscex.Async.sleep(10));
+                }
+                while (seed.canScale()) {
+                    seed.scale(0.95);
+                    $await(Jscex.Async.sleep(10));
+                }
+                while (seed.canMove()) {
+                    seed.move(0, 2);
+                    foot.draw();
+                    $await(Jscex.Async.sleep(10));
+                }
+            }));
+
+            var growAnimate = eval(Jscex.compile("async", function () {
+                do {
+                    tree.grow();
+                    $await(Jscex.Async.sleep(10));
+                } while (tree.canGrow());
+            }));
+
+            var flowAnimate = eval(Jscex.compile("async", function () {
+                do {
+                    tree.flower(2);
+                    $await(Jscex.Async.sleep(10));
+                } while (tree.canFlower());
+            }));
+
+            var moveAnimate = eval(Jscex.compile("async", function () {
+                tree.snapshot("p1", 240, 0, 610, 680);
+                while (tree.move("p1", 500, 0)) {
+                    foot.draw();
+                    $await(Jscex.Async.sleep(10));
+                }
+                foot.draw();
+                tree.snapshot("p2", 500, 0, 610, 680);
+
+                // 会有闪烁不得意这样做, (＞﹏＜)
+                canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
+                canvas.css("background", "#ffe");
+                $await(Jscex.Async.sleep(300));
+                canvas.css("background", "none");
+            }));
+
+            var jumpAnimate = eval(Jscex.compile("async", function () {
+                var ctx = tree.ctx;
+                while (true) {
+                    tree.ctx.clearRect(0, 0, width, height);
+                    tree.jump();
+                    foot.draw();
+                    $await(Jscex.Async.sleep(25));
+                }
+            }));
+
+            var textAnimate = eval(Jscex.compile("async", function () {
+                $("#code").show().typewriter();
+            }));
+
+            var runAsync = eval(Jscex.compile("async", function () {
+                $await(seedAnimate());
+                $await(growAnimate());
+                $await(flowAnimate());
+                $await(moveAnimate());
+
+                textAnimate().start();
+
+                $await(jumpAnimate());
+            }));
+
+            runAsync().start();
+        })();
+    </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    
+    <script>
+        var voice = document.getElementById('voice');
+        function autoPlayAudio1() {
+        try {
+
+        wx.config({
+            // 配置信息, 即使不正确也能使用 wx.ready
+            debug: false,
+            appId: '',
+            timestamp: 1,
+            nonceStr: '',
+            signature: '',
+            jsApiList: []
+        });
+        wx.ready(function() {
+            voice.play();
+        });
+        } catch (e){}
+        }
+        autoPlayAudio1()
+        try{voice.play()} catch(e){}
+        if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+            voice.play();
+        } else {
+            if (document.addEventListener) {
+                document.addEventListener("WeixinJSBridgeReady", function(){
+                    voice.play();
+                }, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", function(){
+                    voice.play();
+                });
+                document.attachEvent("onWeixinJSBridgeReady", function(){
+                    voice.play();
+                });
+            }
+        }
+
+    </script>
+</body>
+
+</html>
