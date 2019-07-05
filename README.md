@@ -1,0 +1,1 @@
+# AomoriL.github.io
