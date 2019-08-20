@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>❤️</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #videoWrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="https://m-l.oss-cn-hangzhou.aliyuncs.com/wechatH5Video.min.js"></script>
+</head>
+
+<body>
+  <div id="videoWrapper">
+    wechatH5Video容器
+  </div>
+</body>
+
+</html>
+<script>
+  var source = 'https://m-l.oss-cn-hangzhou.aliyuncs.com/min.mp4';
+  var video = new wechatH5Video(source, {
+    context: 'videoWrapper',
+    mask: true,
+    poster: 'https://m-l.oss-cn-hangzhou.aliyuncs.com/min.jpg',
+    playBtn: true,
+    jumpBtn: true,
+    autoClose: false,
+    canvas: false,
+    isRotate: true,
+    onPlay() {
+      console.log('play');
+    },
+    onPause() {
+      console.log('pause');
+    },
+    onEnd() {
+      console.log('end');
+    }
+  });
+  video.load();
+</script>
+<!-- <script src="https://cdn.bootcss.com/eruda/1.5.4/eruda.min.js"></script>
+<script>
+  eruda.init();
+</script> -->
